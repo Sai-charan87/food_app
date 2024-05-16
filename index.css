@@ -11,21 +11,30 @@
 }
 .nav-items > ul {
   display: flex;
-  font-size: 34px;
+  font-size: 24px;
   list-style-type: none;
 }
 .nav-items > ul > li {
   padding: 10px;
   margin: 10px;
 }
+.res-container {
+  display: flex;
+  flex-wrap: wrap;
+}
 .search {
-  padding: 10px;
+  padding: 20px;
+  margin: 10px;
 }
 .res-card {
   padding: 5px;
-  width: 20px;
-  height: 300px;
+  width: 200px;
+  margin: 10px;
+  /* height: 300px; */
+}
+.res-card:hover {
   border: 1px solid black;
+  cursor: pointer;
 }
 .res-logo {
   padding: 5px;
