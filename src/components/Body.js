@@ -5,6 +5,9 @@ import { useState, useEffect } from "react";
 //import { join } from "telegraf/format";
 const Body = () => {
   const [List, setList] = useState([]);
+  const [filteredList, setfilteredList] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  console.log("Body rendered");
   useEffect(() => {
     console.log("useeffect called");
     fetchData();
@@ -18,6 +21,9 @@ const Body = () => {
     setList(
       res?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
+    setfilteredList(
+      res?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
   };
   if (List.length === 0) {
     return <Shimmer></Shimmer>;
@@ -25,19 +31,40 @@ const Body = () => {
   return (
     <div className="body">
       <div className="filter">
+        <div className="search">
+          <input
+            type="text"
+            className="search-box"
+            value={searchText}
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }}
+          />
+          <button
+            onClick={() => {
+              const filteredList = List.filter((res) =>
+                res.info.name.toLowerCase().includes(searchText.toLowerCase())
+              );
+              setfilteredList(filteredList);
+              console.log(searchText);
+            }}
+          >
+            Search
+          </button>
+        </div>
         <button
           className="filter-btn"
           onClick={() => {
-            const filteredList = List.filter((res) => res.info.avgRating > 4.5);
+            const filtered = List.filter((res) => res.info.avgRating > 4.5);
 
-            setList(filteredList);
+            setfilteredList(filtered);
           }}
         >
           Top Rated Restaurants
         </button>
       </div>
       <div className="res-container">
-        {List.map((restaurant) => (
+        {filteredList.map((restaurant) => (
           <RestaurantCard key={restaurant.info.id} resData={restaurant} />
         ))}
         ;
