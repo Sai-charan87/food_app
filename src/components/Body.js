@@ -3,6 +3,7 @@ import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { useState, useEffect } from "react";
 //import { join } from "telegraf/format";
+import { Link } from "react-router-dom";
 const Body = () => {
   const [List, setList] = useState([]);
   const [filteredList, setfilteredList] = useState([]);
@@ -14,7 +15,7 @@ const Body = () => {
   }, []);
   const fetchData = async () => {
     const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.37240&lng=78.43780&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.2614203&lng=80.149574&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
     const res = await data.json();
     console.log(res);
@@ -65,7 +66,12 @@ const Body = () => {
       </div>
       <div className="res-container">
         {filteredList.map((restaurant) => (
-          <RestaurantCard key={restaurant.info.id} resData={restaurant} />
+          <Link
+            key={restaurant.info.id}
+            to={"/restaurants/" + restaurant.info.id}
+          >
+            <RestaurantCard resData={restaurant} />
+          </Link>
         ))}
         ;
       </div>
